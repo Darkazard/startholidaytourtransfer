@@ -56,7 +56,8 @@ export default function Step2Page() {
         transferPrice: step1Data.price,
         totalPrice: vehicleTotal,
         vehicleImage: data.vehicleImage,
-        tripType: data.tripType
+        tripType: data.tripType,
+        currency: 'USD'
       };
       localStorage.setItem('reservationStep2', JSON.stringify(step2Data));
       router.push('/en/reservation/step3');
