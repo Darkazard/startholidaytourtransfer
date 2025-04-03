@@ -1,154 +1,222 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import type { Swiper as SwiperType } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules'
+import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 import ReservationForm from '@/components/Reservation/ReservationForm'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import LanguageSelector from '@/components/LanguageSelector'
+import { usePathname } from 'next/navigation'
+import { translations } from '@/translations'
 
-export default function Anasayfa() {
-  const slides = [
-    {
-      image: '/images/slider/slide1.jpg',
-      title: 'VIP Transfer Hizmeti',
-    },
-    {
-      image: '/images/slider/slide2.jpg',
-      title: 'Havalimanı Transfer',
-    },
-    {
-      image: '/images/slider/slide3.jpg',
-      title: 'Özel Turlar',
+// Video Popup Component
+const VideoPopup = ({ isOpen, onClose, videoId }: { isOpen: boolean; onClose: () => void; videoId: string }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+      <div className="relative w-full max-w-4xl mx-4">
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 text-white hover:text-red-500 transition-colors"
+        >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div className="relative pt-[56.25%]">
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function HomePage() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const swiperRef = useRef<SwiperType>();
+  const pathname = usePathname();
+  const currentLang = pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr';
+
+  // Menü açıldığında sayfa scrollunu engelle
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${window.scrollY}px`;
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
+  }, [isMenuOpen]);
+
+  const slides = [
+    { image: '/images/slider/slide1.jpg' },
+    { image: '/images/slider/slide2.jpg' },
+    { image: '/images/slider/slide3.jpg' },
+    { image: '/images/slider/slide4.jpg' },
+    { image: '/images/slider/slide5.jpg' },
+    { image: '/images/slider/slide6.jpg' },
+    { image: '/images/slider/slide7.jpg' },
+    { image: '/images/slider/slide8.jpg' },
+    { image: '/images/slider/slide9.jpg' },
+    { image: '/images/slider/slide10.jpg' },
+    { image: '/images/slider/slide11.jpg' },
+    { image: '/images/slider/slide12.jpg' },
+    { image: '/images/slider/slide13.jpg' },
+    { image: '/images/slider/slide14.jpg' },
+    { image: '/images/slider/slide15.jpg' },
+    { image: '/images/slider/slide16.jpg' }
+  ]
+
+  // Görünecek pagination numaralarını hesapla
+  const getVisibleNumbers = () => {
+    const totalSlides = slides.length;
+    const current = activeSlide;
+    
+    // İlk görüntülemede 1-2-3 göster
+    if (current === 0) return [0, 1, 2];
+    if (current === totalSlides - 1) return [totalSlides - 2, totalSlides - 1, 0];
+    return [current - 1, current, current + 1];
+  }
+
+  const links = [
+    { href: '/anasayfa', text: 'Anasayfa' },
+    { href: '/rezervasyon', text: 'Rezervasyon' },
+    { href: '/araclar', text: 'Araçlar' },
+    { href: '/transferler', text: 'Transferler' },
+    { href: '/galeri', text: 'Galeri' },
+    { href: '/hakkimizda', text: 'Hakkımızda' },
+    { href: '/yorumlar', text: 'Yorumlar' },
+    { href: '/iletisim', text: 'İletişim' }
   ]
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="relative min-h-screen bg-gray-900">
       {/* Modern Slider Section */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="relative h-[55vh] max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
-          <Swiper
-            modules={[Autoplay, Navigation, Pagination, EffectFade]}
-            effect="fade"
-            spaceBetween={0}
-            slidesPerView={1}
-            navigation
-            pagination={{ clickable: true }}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            loop={true}
-            className="w-full h-full rounded-2xl"
-          >
-            {slides.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <div className="relative w-full h-full">
-                  <Image
-                    src={slide.image}
-                    alt={slide.title}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    priority={index === 0}
-                    className="rounded-2xl"
-                  />
+      <main>
+        <div className="container mx-auto px-4 py-8">
+          <div className="relative max-w-6xl mx-auto">
+            <div className="rounded-2xl overflow-hidden shadow-2xl h-[55vh] lg:h-[85vh]">
+              <Swiper
+                modules={[Autoplay, Navigation, Pagination, EffectFade]}
+                effect="fade"
+                spaceBetween={0}
+                slidesPerView={1}
+                navigation
+                pagination={false}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                loop={true}
+                className="w-full h-full rounded-2xl"
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                onSlideChange={(swiper) => {
+                  setActiveSlide(swiper.realIndex);
+                }}
+              >
+                {slides.map((slide, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <Image
+                        src={slide.image}
+                        alt={`Slide ${index + 1}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 1200px"
+                        style={{ objectFit: 'cover' }}
+                        className="rounded-2xl lg:object-contain lg:bg-[#111]"
+                        priority={index === 0}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {/* Custom Pagination */}
+            <div className="flex items-center justify-center gap-2 mt-4">
+              {getVisibleNumbers().map((num) => (
+                <button
+                  key={num}
+                  onClick={() => {
+                    if (swiperRef.current) {
+                      swiperRef.current.slideToLoop(num);
+                    }
+                  }}
+                  className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-medium transition-all duration-300 ${
+                    activeSlide === num
+                      ? 'bg-red-500 text-white scale-110'
+                      : 'bg-black/50 text-gray-300 hover:bg-black/70 hover:text-white'
+                  }`}
+                >
+                  {num + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Reservation Form */}
+          <div className="mt-8">
+            <ReservationForm showExtras={true} />
+          </div>
+        </div>
+      </main>
+
+          {/* About Us Section */}
+          <div className="container mx-auto px-4 py-16">
+            <div className="bg-black backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-800 p-8 mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">Hakkımızda</h2>
+              <div className="prose prose-lg prose-invert mx-auto">
+                <div className="text-white space-y-6">
+                  <p>
+                    2013 yılından bu yana, Start Holiday VIP Transfer olarak Antalya'da lüks ve konforlu ulaşım hizmetleri sunuyoruz. Her geçen yıl, değerli misafirlerimizden aldığımız geri bildirimler ve profesyonel ekibimizin özverili çalışmaları sayesinde hizmet kalitemizi daha da kusursuz hale getiriyoruz.
+                  </p>
+                  
+                  <p>
+                    Misafirlerimize sadece bir transfer hizmeti sunmuyor, aynı zamanda unutulmaz bir seyahat deneyimi yaşatmayı hedefliyoruz. VIP minibüslerimizle sunduğumuz özel hizmetler arasında:
+                  </p>
+                  
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Havalimanı - Otel Transferleri: Konforlu ve güvenli bir şekilde gideceğiniz noktaya ulaştırıyoruz.</li>
+                    <li>Alışveriş Turları: Antalya'nın en prestijli alışveriş merkezlerine Mall of Antalya, Terracity, Mark Antalya vb... özel VIP ulaşım sağlıyoruz.</li>
+                    <li>Antalya city, Kemer, Side, Manavgat, Alanya, Dimçayı, Kaş, Fethiye, Ölüdeniz, Saklıkent Fethiye: Antalya ve çevresinin doğal ve tarihi güzelliklerini keşfetmek isteyen misafirlerimize özel rotalar sunuyoruz.</li>
+                    <li>St. Nicholas Kilisesi Ziyareti: Demre'de bulunan, Noel Baba olduğuna inanılan Aziz Nikolaos'ın ölümü ile yapılan kilise. Noel Baba'nın ölümünden sonra bir süre burada yattığı daha sonra kemiklerinin İtalyan denizcilerce Bari'ye götürüldüğüne inanılır.</li>
+                  </ul>
+
+                  <p>
+                    <strong className="text-white">Özel VIP Geziler:</strong> Kendi programınızı oluşturabilir, profesyonel sürücülerimiz eşliğinde size özel bir deneyim yaşayabilirsiniz.
+                  </p>
+
+                  <p className="text-xl font-semibold text-white text-center mt-8">
+                    Lüks, konfor ve güveni bir arada sunan hizmetlerimizle, Antalya'da unutulmaz bir yolculuk için buradayız!
+                  </p>
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        {/* Reservation Form */}
-        <div className="container mx-auto px-4">
-          <ReservationForm showExtras={true} />
-        </div>
-      </div>
-
-      {/* Transfer Info Section */}
-      <div className="bg-black/80 backdrop-blur-sm py-16">
-        <div className="container mx-auto max-w-4xl px-4">
-          <div className="text-center space-y-6">
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Antalya'da güvenli ve konforlu ulaşımın adresi! Havalimanından otelinize, şehir içi transferlerden özel turlara kadar tüm ulaşım ihtiyaçlarınızda yanınızdayız. Modern araç filomuz ve profesyonel sürücülerimizle 7/24 hizmetinizdeyiz. Rezervasyonunuzu hemen yapın, transfer stresinizi unutun!
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Phone Number Section */}
-      <div className="bg-gray-900 py-12">
-        <div className="container mx-auto max-w-4xl px-4">
-          <div className="text-center space-y-4">
-            <h3 className="text-2xl font-semibold text-white mb-2">Bize Ulaşın</h3>
-            <a href="tel:+905435355488" className="text-3xl md:text-4xl font-bold text-red-500 hover:text-red-600 transition-colors">
-              +90 543 535 54 88
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Features */}
-      <div className="bg-gray-900 pb-20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 animate-fadeIn">
-            <div className="bg-black p-6 rounded-xl shadow-lg hover-card">
-              <div className="text-red-500 text-3xl mb-4">
-                <i className="fas fa-plane"></i>
               </div>
-              <h3 className="text-lg font-semibold mb-2 text-white">Havalimanı Transferi</h3>
-              <p className="text-gray-400 mb-4">
-                Antalya Havalimanı'ndan otelinize güvenli transfer.
-              </p>
-              <a href="/transferler" className="text-red-500 hover:text-red-600">
-                Detaylı Bilgi →
-              </a>
-            </div>
-
-            <div className="bg-black p-6 rounded-xl shadow-lg hover-card">
-              <div className="text-red-500 text-3xl mb-4">
-                <i className="fas fa-hotel"></i>
-              </div>
-              <h3 className="text-lg font-semibold mb-2 text-white">Otel Transferi</h3>
-              <p className="text-gray-400 mb-4">
-                Oteller arası konforlu transfer hizmeti.
-              </p>
-              <a href="/transferler" className="text-red-500 hover:text-red-600">
-                Detaylı Bilgi →
-              </a>
-            </div>
-
-            <div className="bg-black p-6 rounded-xl shadow-lg hover-card">
-              <div className="text-red-500 text-3xl mb-4">
-                <i className="fas fa-car"></i>
-              </div>
-              <h3 className="text-lg font-semibold mb-2 text-white">VIP Transfer</h3>
-              <p className="text-gray-400 mb-4">
-                Lüks araçlarla özel transfer hizmeti.
-              </p>
-              <a href="/transferler" className="text-red-500 hover:text-red-600">
-                Detaylı Bilgi →
-              </a>
-            </div>
-
-            <div className="bg-black p-6 rounded-xl shadow-lg hover-card">
-              <div className="text-red-500 text-3xl mb-4">
-                <i className="fas fa-users"></i>
-              </div>
-              <h3 className="text-lg font-semibold mb-2 text-white">Grup Transferi</h3>
-              <p className="text-gray-400 mb-4">
-                Büyük gruplar için özel transfer çözümleri.
-              </p>
-              <a href="/transferler" className="text-red-500 hover:text-red-600">
-                Detaylı Bilgi →
-              </a>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   )
 } 

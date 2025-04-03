@@ -1,3 +1,5 @@
+import TagCloud from '@/components/TagCloud'
+
 export default function Hakkimizda() {
   return (
     <div className="min-h-screen bg-gray-900 py-20">
@@ -52,6 +54,14 @@ export default function Hakkimizda() {
             </ul>
           </div>
         </div>
+
+        <div className="prose prose-lg prose-invert mx-auto">
+          <div className="text-white space-y-6">
+            {/* ... existing code ... */}
+          </div>
+        </div>
+
+        <TagCloud />
       </div>
     </div>
   )

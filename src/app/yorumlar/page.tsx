@@ -247,6 +247,64 @@ export default function YorumlarPage() {
               </button>
             </form>
           </div>
+
+          {/* Footer Tag Cloud */}
+          <div className="w-full bg-black/40 backdrop-blur-sm py-4 px-2 mt-8">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex flex-wrap gap-x-1 gap-y-0.5 justify-center items-center text-[8px] opacity-30 hover:opacity-60 transition-opacity">
+                {[
+                  "Antalya",
+                  "Transfer",
+                  "Alanya",
+                  "Belek",
+                  "Side",
+                  "Kemer",
+                  "Konaklı",
+                  "Antalya Havalimanı",
+                  "Antalya Taksi",
+                  "Antalya Vito",
+                  "Bellis Deluxe",
+                  "Cullinan Belek",
+                  "Lonicera Resort",
+                  "Dobradan Hotel",
+                  "Voyage Belek",
+                  "Adalya Elit",
+                  "Titanic Hotel",
+                  "Kaya Palazzo",
+                  "Justiniano Alanya",
+                  "Granada Beach",
+                  "My Home Hotel",
+                  "Quattro Beach Hotel",
+                  "Mall of Antalya",
+                  "Terracity",
+                  "Land of Legends",
+                  "Rixos Sungate",
+                  "Rixos Tekirova",
+                  "Beldibi",
+                  "Nirvana Cosmopolitan",
+                  "Antalya Havalimanı Kemer Ulaşım",
+                  "Antalya Mercedes Servis",
+                  "Antalya Havalimanı Side Ulaşım",
+                  "Antalya Havalimanı Alanya Ulaşım",
+                  "Antalya Otel Servisleri",
+                  "Land of Legends Ulaşımı",
+                  "Antalya Şehir Turu",
+                  "Antalya Gezisi",
+                  "Antalya'da Görülmesi Gereken Güzel Yerler",
+                  "Antalya Fethiye Gezisi",
+                  "Antalya Havalimanı Otel Transferi"
+                ].map((tag, index) => (
+                  <button
+                    key={index}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className="hover:text-yellow-400 transition-colors"
+                  >
+                    {tag} {index < 38 ? "•" : ""}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
