@@ -217,6 +217,115 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+      {/* Footer Tag Cloud */}
+      <div className="w-full bg-black/40 backdrop-blur-sm py-4 px-2 mt-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-wrap gap-x-1 gap-y-0.5 justify-center items-center text-[8px] opacity-30 hover:opacity-60 transition-opacity">
+            {[
+              "Antalya Havalimanı",
+              "Antalya",
+              "Transfer",
+              "Alanya",
+              "Belek",
+              "Side",
+              "Kemer",
+              "Antalya havalimanı",
+              "konaklı",
+              "Antalya havalimanı",
+              "Taxi Antalya",
+              "Antalya vito",
+              "Bellis deluxe",
+              "cullinan belek",
+              "Lonicera Resort",
+              "dobradan hotel",
+              "voyage Belek",
+              "adalya elit",
+              "titanic hotel",
+              "kaya pallazo",
+              "justiano Alanya",
+              "granada Beach",
+              "my lome hotel",
+              "quattro Beach hotel",
+              "Mall of Antalya",
+              "Terracity",
+              "Land of Legens",
+              "Rixos Sungate",
+              "Rixos tekirova",
+              "Beldibi",
+              "Nirvana cosmopolitan",
+              "Dobedan World Palace",
+              "Rai Premium Tekirova",
+              "Güral Tekirova",
+              "cullinan belek",
+              "Lonicera Resort",
+              "Dobedan hotel",
+              "voyage Belek",
+              "adalya elit",
+              "Bosphorus Sorgun hotel",
+              "Lusso Sorgun hotel",
+              "titanic hotel",
+              "kaya pallazo",
+              "justiano Alanya",
+              "granada Beach",
+              "my lome hotel",
+              "quattro Beach hotel",
+              "Mall of Antalya",
+              "Terracity",
+              "Land of Legens",
+              "Rixos Sungate",
+              "Rixos tekirova",
+              "Beldibi",
+              "Gloria Serenity Hotel",
+              "Gloria Golf Resort",
+              "Long Beach hotel",
+              "Myhome hotel",
+              "Justiano club Conti",
+              "Selectum Family Resort Side",
+              "Aska Lara",
+              "Adalya Elit",
+              "Titanic Mardan Palace",
+              "Titanic Deluxe Belek",
+              "Mega Saray Hotel",
+              "Spice Hotel",
+              "Liu Resort",
+              "Tui Magic Life Jacaranda",
+              "Tui Magic Life Masmavi",
+              "Crystal Water World",
+              "Crystal Aura Beach",
+              "Barut Hemera",
+              "Nirvana cosmopolitan",
+              "Royal Tac Mahal",
+              "Kirman Leodaikya",
+              "Kirman Side Marin",
+              "NG Phasalis",
+              "Limak Limrq",
+              "Daima Biz",
+              "Max Royal Kemer",
+              "utopiabeachclub",
+              "Antalya Havalimanı Transfer",
+              "Antalya Mercedes Servis",
+              "Antalya Havalimanı Side Transfer",
+              "Antalya Havalimanı Alanya Transfer",
+              "Antalya Otel Servisleri",
+              "Land of Legends Transfer",
+              "Antalya Şehir Turu",
+              "Antalya Turu",
+              "Antalya'da Gezilecek Yerler",
+              "Antalya Fethiye Turu",
+              "Antalya Havalimanı Otel Transfer"
+            ].map((tag, index) => (
+              <button
+                key={index}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="hover:text-yellow-400 transition-colors"
+              >
+                {tag} {index < 89 ? "•" : ""}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   )
 } 

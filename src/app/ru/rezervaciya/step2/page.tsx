@@ -21,6 +21,7 @@ export default function Step2Page() {
   const [step1Data, setStep1Data] = useState<Step1Data | null>(null)
   const [loading, setLoading] = useState(true)
   const [tripType, setTripType] = useState<'one-way' | 'round-trip'>('one-way')
+  const [selectedVehicle, setSelectedVehicle] = useState<number | null>(null)
 
   useEffect(() => {
     const savedData = localStorage.getItem('reservationStep1')
@@ -63,7 +64,7 @@ export default function Step2Page() {
     }
   };
 
-  const handleTripTypeChange = (vehicleId: number, type: 'one-way' | 'round-trip') => {
+  const handleTripTypeChange = (type: 'one-way' | 'round-trip') => {
     setTripType(type);
   };
 
@@ -85,21 +86,25 @@ export default function Step2Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-[95vw] lg:max-w-[90vw] xl:max-w-[85vw] 2xl:max-w-[80vw] mx-auto py-8">
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="text-2xl font-bold text-white">{t.selectedVehicle}</h1>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-400">{t.step2}</span>
+    <div className="min-h-screen bg-[url('/images/bg.webp')] bg-cover bg-center bg-fixed">
+      <div className="min-h-screen bg-black/60 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-800">
+              <div className="flex items-center justify-between mb-8">
+                <h1 className="text-2xl font-bold text-white">{t.selectedVehicle}</h1>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-400">{t.step2}</span>
+                </div>
+              </div>
+
+              <VehicleSelect
+                onVehicleSelect={handleVehicleSelect}
+                onTripTypeChange={handleTripTypeChange}
+                initialPrice={step1Data.price}
+              />
             </div>
           </div>
-
-          <VehicleSelect
-            onVehicleSelect={handleVehicleSelect}
-            onTripTypeChange={handleTripTypeChange}
-            initialPrice={step1Data.price}
-          />
         </div>
       </div>
     </div>
