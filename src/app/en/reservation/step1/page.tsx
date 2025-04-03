@@ -8,7 +8,7 @@ export default function Step1() {
       <div className="min-h-screen bg-black/60 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-5xl mx-auto">
-            <ReservationForm showExtras={false} />
+          <ReservationForm showExtras={false} />
 
             {/* Footer Tag Cloud */}
             <div className="w-full bg-black/40 backdrop-blur-sm py-4 px-2 mt-8">
@@ -57,7 +57,7 @@ export default function Step1() {
                     "Antalya Airport Hotel Transfer"
                   ].map((tag, index) => (
                     <button
-                      key={index}
+                  key={index}
                       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                       className="hover:text-yellow-400 transition-colors"
                     >

@@ -57,14 +57,14 @@ export default function Step1() {
                     "Antalya Havalimanı Otel Transferi"
                   ].map((tag, index) => (
                     <button
-                      key={index}
+                    key={index}
                       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                       className="hover:text-yellow-400 transition-colors"
                     >
                       {tag} {index < 38 ? "•" : ""}
                     </button>
                   ))}
-                </div>
+                  </div>
               </div>
             </div>
           </div>
