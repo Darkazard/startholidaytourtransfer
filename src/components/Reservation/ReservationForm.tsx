@@ -8,7 +8,7 @@ import { MapPinIcon, UserIcon, CurrencyDollarIcon } from '@heroicons/react/24/ou
 import VehicleList from '@/components/Vehicle/VehicleList'
 import Image from 'next/image'
 import PriceList from './PriceList'
-import { routes, germanRoutes } from '@/data/routes'
+import { routes } from '@/data/routes'
 import { useTranslations } from 'next-intl'
 
 interface Step1Data {
@@ -134,7 +134,7 @@ const translations = {
     selectRoute: 'ПОЖАЛУЙСТА, ВЫБЕРИТЕ МАРШРУТ',
     clickForReservation: 'НАЖМИТЕ ДЛЯ БРОНИРОВАНИЯ',
     priceAndReservation: 'ЦЕНА: {price}$ - ЗАБРОНИРОВАТЬ',
-    transferPriceList: 'Список Цен на Трансфер',
+    transferPriceList: 'Список цен на трансфер',
     clickForRoute: 'Нажмите для выбора маршрута',
     fromLabel: 'Откуда',
     toLabel: 'Куда',
@@ -690,8 +690,6 @@ export default function ReservationForm({ showExtras = true }: { showExtras?: bo
                     </div>
                   </div>
                 </div>
-                <h3 className="mt-3 text-lg font-medium text-white text-center">{translations[pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr'].video1Title}</h3>
-                <p className="mt-1 text-sm text-gray-400 text-center">{translations[pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr'].video1Description}</p>
               </div>
 
               <div className="group cursor-pointer" onClick={() => setSelectedVideo('JsCaQfTWEdw')}>
@@ -709,8 +707,6 @@ export default function ReservationForm({ showExtras = true }: { showExtras?: bo
                     </div>
                   </div>
                 </div>
-                <h3 className="mt-3 text-lg font-medium text-white text-center">{translations[pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr'].video2Title}</h3>
-                <p className="mt-1 text-sm text-gray-400 text-center">{translations[pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr'].video2Description}</p>
               </div>
 
               <div className="group cursor-pointer" onClick={() => setSelectedVideo('_OCMbMM0BmE')}>
@@ -728,8 +724,6 @@ export default function ReservationForm({ showExtras = true }: { showExtras?: bo
                     </div>
                   </div>
                 </div>
-                <h3 className="mt-3 text-lg font-medium text-white text-center">{translations[pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr'].video3Title}</h3>
-                <p className="mt-1 text-sm text-gray-400 text-center">{translations[pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr'].video3Description}</p>
               </div>
 
               <div className="group cursor-pointer" onClick={() => setSelectedVideo('jn5KzJoEmvs')}>
@@ -747,8 +741,6 @@ export default function ReservationForm({ showExtras = true }: { showExtras?: bo
                     </div>
                   </div>
                 </div>
-                <h3 className="mt-3 text-lg font-medium text-white text-center">{translations[pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr'].video4Title}</h3>
-                <p className="mt-1 text-sm text-gray-400 text-center">{translations[pathname?.startsWith('/en/') ? 'en' : pathname?.startsWith('/de/') ? 'de' : pathname?.startsWith('/ru/') ? 'ru' : 'tr'].video4Description}</p>
               </div>
             </div>
           </div>
